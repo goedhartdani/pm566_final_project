@@ -1,0 +1,135 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Shooting and Scoring at the 2023 Women’s World Cup",
+    "section": "",
+    "text": "Scoring goals is central to success in soccer, but not every shot offers the same chance of scoring. A player’s distance from goal and the angle available may help explain why some shots become goals while others do not.\nThis project investigates the question:\nHow does shot location relate to the likelihood of scoring at the 2023 FIFA Women’s World Cup?\nUsing StatsBomb event data, I examined scoring patterns by shot distance and shooting angle. I also compared headers with shots taken with the feet to explore whether differences in shot location help explain their scoring percentages."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Shooting and Scoring at the 2023 Women’s World Cup",
+    "section": "",
+    "text": "Scoring goals is central to success in soccer, but not every shot offers the same chance of scoring. A player’s distance from goal and the angle available may help explain why some shots become goals while others do not.\nThis project investigates the question:\nHow does shot location relate to the likelihood of scoring at the 2023 FIFA Women’s World Cup?\nUsing StatsBomb event data, I examined scoring patterns by shot distance and shooting angle. I also compared headers with shots taken with the feet to explore whether differences in shot location help explain their scoring percentages."
+  },
+  {
+    "objectID": "index.html#methods",
+    "href": "index.html#methods",
+    "title": "Shooting and Scoring at the 2023 Women’s World Cup",
+    "section": "Methods",
+    "text": "Methods\nData were acquired from the StatsBomb Open Data repository. Shot events were collected from all 64 tournament matches.\nThe initial dataset contained 1,678 shots. I excluded 70 penalties and penalty shootout attempts, followed by one shot with a recorded location outside the standardized pitch boundaries. The final sample contained 1,607 shots, including 135 goals, for an overall scoring percentage of 8.4%.\nDistance was calculated from the shot location to the center of the goal using StatsBomb’s standardized 120 × 80 coordinate system. These distances describe positions on the standardized pitch rather than measured distances on each stadium’s field.\nShooting angle was calculated as the angle between the two goalposts from the shooter’s location. A larger angle represents a wider view of the goal.\nI summarized scoring percentages across distance and angle groups. An exploratory logistic regression examined distance, angle, and body part together. This model included foot shots and headers, excluding the 12 shots classified as other body parts.\nAnalysis and visualization were conducted in R using jsonlite, ggplot2, and plotly. Additional preparation details and exploratory analysis are provided on the About the Data page."
+  },
+  {
+    "objectID": "index.html#results",
+    "href": "index.html#results",
+    "title": "Shooting and Scoring at the 2023 Women’s World Cup",
+    "section": "Results",
+    "text": "Results\n\nExplore the shot locations\nEach point represents a shot. Hover over a point to see the player, team, outcome, distance, and shooting angle. Click a legend category to hide or show it, or double-click to isolate it.\n\n\n\n\n\n\n\n\nFigure 1: Interactive shot locations. Teams attack toward the goal on the right.\n\n\n\n\n\n\nCloser shots scored more often\nScoring percentage decreased across the distance groups, from 41.18% within 6 StatsBomb units to 2.81% beyond 24 units. The closest group contained 68 shots, compared with between 332 and 413 shots in each of the remaining groups.\n\n\n\n\n\n\n\n\nFigure 2: Observed scoring percentages by distance to the goal center. Labels show scoring percentage and number of attempts.\n\n\n\n\n\n\n\nWider shooting angles had higher scoring percentages\nScoring percentage increased from 3.52% for angles up to 15° to 20.70% for angles greater than 45°. Distance and angle are related, so these grouped comparisons do not establish their independent associations with scoring.\n\n\n\n\n\n\n\n\nFigure 3: Observed scoring percentages by the angle between the goalposts as seen by the shooter.\n\n\n\n\n\n\n\nHeaders and foot shots came from different locations\nHeaders had a higher overall scoring percentage than foot shots: 9.79% versus 7.71%.\nHowever, headers were typically taken closer to goal. Their median distance was 9.48 StatsBomb units, compared with 19.69 for foot shots. Headers also had a wider median shooting angle: 41.37° versus 18.94°.\n\n\n\n\nTable 1: Shots and scoring percentages by body part.\n\n\n\n\n\n\nBody part\nShots\nGoals\nScoring percentage (%)\n\n\n\n\nFoot\n1258\n97\n7.71\n\n\nHeader\n337\n33\n9.79\n\n\nOther\n12\n5\n41.67\n\n\n\n\n\n\n\n\nThe other-body-part category contained only 12 shots. Its high scoring percentage should be interpreted cautiously because it is based on very few attempts.\n\n\nAccounting for distance, angle, and body part together\nThe logistic regression included 1,595 shots and 130 goals. Odds ratios below 1 indicate lower estimated odds of scoring; values above 1 indicate higher estimated odds.\n\n\n\n\nTable 2: Adjusted odds ratios with approximate 95% confidence intervals.\n\n\n\n\n\n\n\n\n\n\n\n\nVariable\nOdds ratio\n95% CI: lower\n95% CI: upper\n\n\n\n\nDistance: per additional StatsBomb unit\n0.937\n0.895\n0.981\n\n\nShooting angle: per additional degree\n1.030\n1.014\n1.046\n\n\nHeader compared with foot shot\n0.394\n0.243\n0.639\n\n\n\n\n\n\n\n\nHolding the other included variables constant:\n\nEach additional distance unit was associated with 6.3% lower odds of scoring.\nEach additional degree of shooting angle was associated with 3.0% higher odds of scoring.\nHeaders had 60.6% lower odds of scoring than foot shots at the same modeled distance and angle.\n\nThese are changes in odds, rather than percentage-point changes in scoring probability. The header comparison changed direction after adjustment, illustrating why the unadjusted scoring percentages should be interpreted alongside shot location.\n\n\nSensitivity to the excluded location\nIncluding the out-of-bounds shot using its recorded coordinates changed the distance odds ratio from 0.937 to 0.945, the angle odds ratio from 1.030 to 1.031, and the header odds ratio from 0.394 to 0.401. The associations retained the same direction and similar magnitudes."
+  },
+  {
+    "objectID": "index.html#conclusion",
+    "href": "index.html#conclusion",
+    "title": "Shooting and Scoring at the 2023 Women’s World Cup",
+    "section": "Conclusion",
+    "text": "Conclusion\nIn this tournament, shots taken closer to goal and with a wider view of the goal had higher observed scoring percentages. Both location measures remained associated with scoring when included together in an exploratory logistic regression.\nHeaders scored more frequently overall than foot shots, but they were typically attempted from closer distances and wider angles. After accounting for these location measures, headers had lower estimated odds of scoring than foot shots.\nThese findings describe associations, not causal effects. The model assumes linear relationships between the location measures and the log-odds of scoring. It also treats shots as independent, despite repeated attempts by the same players and teams, so its confidence intervals should be interpreted cautiously. Defensive pressure, goalkeeper positioning, and other contextual factors were not included. Results from one tournament may not generalize to other competitions.\nOverall, the findings highlight the importance of considering where shots are taken when comparing scoring outcomes."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About the Data",
+    "section": "",
+    "text": "This project uses StatsBomb Open Data from the 2023 FIFA Women’s World Cup.\nThe data were downloaded in R using the jsonlite package. First, I retrieved the tournament’s match list using competition identifier 72 and season identifier 107. This returned 64 matches.\nI then used each match identifier to download its event file, selected shot events, and combined them into one dataset. The download contained 1,678 shot events.\nThe original files use JSON format. Each match event file contains records of actions during a match, rather than one row per player or match. After selecting shots, each row in the analysis dataset represented one shot attempt."
+  },
+  {
+    "objectID": "about.html#data-source",
+    "href": "about.html#data-source",
+    "title": "About the Data",
+    "section": "",
+    "text": "This project will use StatsBomb Open Data for the 2023 FIFA Women’s World Cup. The data is available from the StatsBomb Open Data repository.\nStatsBomb provides match information, player lineups, and records of individual match events. This project will focus on shot events and link them to match information."
+  },
+  {
+    "objectID": "about.html#raw-data",
+    "href": "about.html#raw-data",
+    "title": "About the Data",
+    "section": "Raw data",
+    "text": "Raw data\nThe source files use JSON format, which stores structured information about matches and events.\nVariables of interest include:\n\nMatch identifier\nPlayer and team\nShot location\nShot outcome\nBody part used\nShot type\nMatch period"
+  },
+  {
+    "objectID": "about.html#data-preparation",
+    "href": "about.html#data-preparation",
+    "title": "About the Data",
+    "section": "Data preparation",
+    "text": "Data preparation\nThe planned preparation steps are:\n\nIdentify matches from the 2023 Women’s World Cup.\nDownload the corresponding match event files.\nSelect shot events.\nExclude penalties and penalty shootouts.\nCheck for duplicate events and missing or invalid values.\nCalculate shot distance and the angle between the goalposts.\nCreate variables for scoring outcome and body-part comparisons.\n\nThis section will be updated to document the actual cleaning steps and any exclusions."
+  },
+  {
+    "objectID": "about.html#exploratory-analysis",
+    "href": "about.html#exploratory-analysis",
+    "title": "About the Data",
+    "section": "Exploratory analysis",
+    "text": "Exploratory analysis\nI compared the distribution of shot distances between goals and other outcomes using a boxplot.\n\n\n\n\n\n\n\n\nFigure 1: Exploratory comparison of shot distances for goals and other outcomes.\n\n\n\n\n\nShots resulting in goals had a lower median distance than shots that did not result in goals. However, the distributions overlapped: some close-range shots were unsuccessful, while some long-range shots resulted in goals.\nThe dots beyond the boxplot whiskers represent unusually distant shots relative to each group’s distribution. These were not automatically treated as data errors or removed.\nI also compared scoring percentages across distance, angle, and body-part groups. Comparisons of median distance and angle by body part helped identify differences in where headers and foot shots were taken."
+  },
+  {
+    "objectID": "about.html#data-credit",
+    "href": "about.html#data-credit",
+    "title": "About the Data",
+    "section": "Data credit",
+    "text": "Data credit\nData provided by StatsBomb. Coordinate definitions and event descriptions are available in the repository’s documentation.\nExploratory tables and plots will be added after the data has been prepared."
+  },
+  {
+    "objectID": "about.html#data-source-and-acquisition",
+    "href": "about.html#data-source-and-acquisition",
+    "title": "About the Data",
+    "section": "",
+    "text": "This project uses StatsBomb Open Data from the 2023 FIFA Women’s World Cup.\nThe data were downloaded in R using the jsonlite package. First, I retrieved the tournament’s match list using competition identifier 72 and season identifier 107. This returned 64 matches.\nI then used each match identifier to download its event file, selected shot events, and combined them into one dataset. The download contained 1,678 shot events.\nThe original files use JSON format. Each match event file contains records of actions during a match, rather than one row per player or match. After selecting shots, each row in the analysis dataset represented one shot attempt."
+  },
+  {
+    "objectID": "about.html#variables-selected",
+    "href": "about.html#variables-selected",
+    "title": "About the Data",
+    "section": "Variables selected",
+    "text": "Variables selected\nThe following fields were retained from the event files:\n\n\n\n\n\n\n\nVariable\nDescription\n\n\n\n\nEvent identifier\nUnique identifier used to check for duplicate shots\n\n\nMatch identifier\nIdentifier linking each shot to a match\n\n\nPlayer and team\nPlayer taking the shot and their team\n\n\nMinute and period\nTiming of the shot, including regulation, extra time, or shootout\n\n\nx and y coordinates\nStarting location of the shot\n\n\nOutcome\nRecorded result, such as goal, saved, blocked, or off target\n\n\nBody part\nBody part used to take the shot\n\n\nShot type\nClassification such as open play, free kick, or penalty"
+  },
+  {
+    "objectID": "about.html#data-quality-checks-and-exclusions",
+    "href": "about.html#data-quality-checks-and-exclusions",
+    "title": "About the Data",
+    "section": "Data quality checks and exclusions",
+    "text": "Data quality checks and exclusions\nI checked for duplicate event identifiers and missing values in the event identifier, period, coordinates, outcome, and shot type. No duplicates or missing values were found in these fields.\nThe preparation steps were:\n\nRetain shot events from regulation time and extra time, corresponding to periods 1–4.\nExclude shots classified as penalties. Together with excluding shootouts, this removed 70 events.\nCheck shot locations against the standardized pitch boundaries.\nExclude one additional shot recorded beyond the attacking goal line.\n\nThe excluded location belonged to a Katie McCabe goal, recorded at x = 120.5 and y = 79.6. This exceeded the standardized pitch length of 120. The record was preserved separately. The exclusion was based on its location and does not establish that the recorded event itself was incorrect.\n\n\n\nPreparation stage\nShots\n\n\n\n\nAll downloaded shot events\n1,678\n\n\nAfter excluding penalties and shootouts\n1,608\n\n\nAfter excluding the out-of-bounds location\n1,607\n\n\n\nThe final spatial analysis sample contained 135 goals and 1,472 shots that did not result in goals."
+  },
+  {
+    "objectID": "about.html#derived-variables",
+    "href": "about.html#derived-variables",
+    "title": "About the Data",
+    "section": "Derived variables",
+    "text": "Derived variables\n\nScoring outcome\nA binary variable identified whether each shot resulted in a goal:\n\n1: outcome recorded as Goal.\n0: any other recorded shot outcome.\n\nThis analysis counts goals recorded as shot events; it is not a count of all tournament goals, including own goals.\n\n\nShot distance\nStatsBomb uses a standardized pitch coordinate system running from 0 to 120 along its length and 0 to 80 across its width. For shot events, the attacking goal is at x = 120.\nDistance to the goal center was calculated as:\n\\[\n\\text{Distance} = \\sqrt{(120-x)^2 + (40-y)^2}\n\\]\nDistances are reported in StatsBomb coordinate units. They describe locations on a standardized pitch rather than directly measured distances on each stadium’s field.\nFor descriptive comparisons, distances were grouped into:\n\n0–6 units\nGreater than 6 through 12 units\nGreater than 12 through 18 units\nGreater than 18 through 24 units\nGreater than 24 units\n\n\n\nShooting angle\nShooting angle was calculated as the angle between the lines connecting the shot location to the two goalposts, located at (120, 36) and (120, 44).\nAngles were expressed in degrees. A larger angle indicates that more of the goalmouth is visible from the shot location. It does not directly measure the shooter’s body orientation or account for defenders.\nAngles were grouped into 0–15°, greater than 15–30°, greater than 30–45°, and greater than 45°.\n\n\nBody-part groups\nShots were grouped as:\n\nFoot: Left Foot or Right Foot.\nHeader: Head.\nOther: all remaining body-part categories.\n\nAll three groups were included in descriptive summaries. The regression comparison included only foot shots and headers because the other category contained just 12 attempts."
+  },
+  {
+    "objectID": "about.html#regression-analysis",
+    "href": "about.html#regression-analysis",
+    "title": "About the Data",
+    "section": "Regression analysis",
+    "text": "Regression analysis\nAn exploratory logistic regression modeled whether a shot resulted in a goal using:\n\nDistance to the goal center.\nShooting angle in degrees.\nBody part: header versus foot.\n\nFoot shots were the reference category. The model included 1,595 shots and 130 goals.\nResults were expressed as odds ratios. Approximate 95% confidence intervals were calculated by exponentiating each regression coefficient plus or minus 1.96 times its standard error.\nThe model assumes linear relationships between distance and angle and the log-odds of scoring. It treats shots as independent and does not account for repeated attempts by the same players or teams. It also omits contextual factors such as defensive pressure and goalkeeper positioning."
+  },
+  {
+    "objectID": "about.html#sensitivity-analysis",
+    "href": "about.html#sensitivity-analysis",
+    "title": "About the Data",
+    "section": "Sensitivity analysis",
+    "text": "Sensitivity analysis\nTo assess sensitivity to the location exclusion, I refitted the same regression after adding the excluded shot using its recorded coordinates.\nThe distance odds ratio changed from 0.937 to 0.945, the shooting-angle odds ratio from 1.030 to 1.031, and the header odds ratio from 0.394 to 0.401. The estimates retained the same direction and similar magnitudes."
+  },
+  {
+    "objectID": "about.html#tools-and-reproducibility",
+    "href": "about.html#tools-and-reproducibility",
+    "title": "About the Data",
+    "section": "Tools and reproducibility",
+    "text": "Tools and reproducibility\nData acquisition, cleaning, and analysis were performed in R. Packages used included:\n\njsonlite: importing the JSON files.\nggplot2: creating static figures.\nplotly: creating the interactive shot map.\nknitr: formatting report tables.\n\nQuarto was used to build the website. Preparation code was kept in data_preparation.R, and prepared objects were saved locally so the website could render without downloading every match again.\nLocal data files were excluded from version control using .gitignore."
+  },
+  {
+    "objectID": "about.html#data-credit-1",
+    "href": "about.html#data-credit-1",
+    "title": "About the Data",
+    "section": "Data credit",
+    "text": "Data credit\nData provided by StatsBomb."
+  }
+]
